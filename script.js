@@ -120,6 +120,14 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.classList.add('theme-' + savedTheme);
     }
 
+    // --- Fix footnote counter to match <li value=""> ---
+    var fnOl = document.querySelector('.footnotes ol');
+    if (fnOl) {
+        var firstLi = fnOl.querySelector('li[value]');
+        var startVal = firstLi ? (parseInt(firstLi.getAttribute('value'), 10) - 1) : 0;
+        fnOl.style.counterReset = 'fn-counter ' + startVal;
+    }
+
     // --- Reading progress bar ---
     var progressBar = document.createElement('div');
     progressBar.id = 'reading-progress';
