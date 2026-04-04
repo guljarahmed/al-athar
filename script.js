@@ -52,8 +52,20 @@ document.addEventListener('DOMContentLoaded', function() {
         scrollBtn.classList.toggle('visible', scrollTop > 400);
     });
 
-    // --- Search button in header ---
+    // --- Logo in header ---
     var header = document.querySelector('header');
+    if (header) {
+        var logo = document.createElement('img');
+        logo.className = 'header-logo';
+        var path = window.location.pathname;
+        var prefix = (path.indexOf('finished_sections') !== -1) ? '../' : '';
+        logo.src = prefix + 'logo.svg';
+        logo.alt = 'Kitab al-Athar';
+        var h1 = header.querySelector('h1');
+        if (h1) h1.insertBefore(logo, h1.firstChild);
+    }
+
+    // --- Search button in header (desktop) ---
     if (header) {
         var searchBtn = document.createElement('button');
         searchBtn.className = 'search-trigger';
@@ -61,6 +73,14 @@ document.addEventListener('DOMContentLoaded', function() {
         searchBtn.title = 'Search (Ctrl+K)';
         searchBtn.addEventListener('click', function() { openSearch(); });
         header.appendChild(searchBtn);
+
+        // --- Hamburger button (mobile) ---
+        var hamburger = document.createElement('button');
+        hamburger.className = 'hamburger-btn';
+        hamburger.innerHTML = '&#9776;';
+        hamburger.title = 'Menu';
+        hamburger.addEventListener('click', function() { openSidebar(); });
+        header.appendChild(hamburger);
     }
 
     // --- Feedback button at bottom ---
@@ -87,6 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.key === 'Escape') {
             closeSearch();
             closeFeedback();
+            closeSidebar();
             return;
         }
 
@@ -278,4 +299,87 @@ function openFeedback() {
 
 function closeFeedback() {
     if (feedbackOverlay) feedbackOverlay.classList.remove('active');
+}
+
+// =============================================
+// 5. MOBILE SIDEBAR
+// =============================================
+var sidebarOverlay, sidebar;
+
+function createSidebar() {
+    sidebarOverlay = document.createElement('div');
+    sidebarOverlay.id = 'sidebar-overlay';
+    document.body.appendChild(sidebarOverlay);
+
+    sidebar = document.createElement('div');
+    sidebar.id = 'sidebar';
+
+    var isDark = document.body.classList.contains('dark-mode');
+
+    // Build navigation links from the existing .sub-nav
+    var navHtml = '';
+    var navBtns = document.querySelectorAll('.sub-nav .nav-btn');
+    for (var i = 0; i < navBtns.length; i++) {
+        var href = navBtns[i].getAttribute('href');
+        var label = navBtns[i].textContent.replace('←', '').replace('→', '').trim();
+        var icon = '&#128279;'; // link icon default
+        if (label === 'Home') icon = '&#127968;';
+        else if (label === 'Chapters') icon = '&#128218;';
+        else if (label === 'Up') icon = '&#11014;&#65039;';
+        else if (label.indexOf('Prev') !== -1) icon = '&#9664;';
+        else if (label.indexOf('Next') !== -1) icon = '&#9654;';
+        navHtml += '<a class="sidebar-item" href="' + href + '">' +
+            '<span class="sidebar-icon">' + icon + '</span>' +
+            '<span class="sidebar-label">' + label + '</span>' +
+        '</a>';
+    }
+
+    sidebar.innerHTML =
+        '<div class="sidebar-header">' +
+            '<h3>Menu</h3>' +
+            '<button class="sidebar-close" onclick="closeSidebar()">&times;</button>' +
+        '</div>' +
+        '<div class="sidebar-menu">' +
+            navHtml +
+            '<div class="sidebar-divider"></div>' +
+            '<button class="sidebar-item" onclick="closeSidebar(); openSearch();">' +
+                '<span class="sidebar-icon">&#128269;</span>' +
+                '<span class="sidebar-label">Search</span>' +
+                '<span class="sidebar-hint">Ctrl+K</span>' +
+            '</button>' +
+            '<button class="sidebar-item" id="sidebar-theme-btn" onclick="toggleTheme(); updateSidebarTheme();">' +
+                '<span class="sidebar-icon" id="sidebar-theme-icon">' + (isDark ? '&#9728;&#65039;' : '&#127769;') + '</span>' +
+                '<span class="sidebar-label" id="sidebar-theme-label">' + (isDark ? 'Light Mode' : 'Dark Mode') + '</span>' +
+            '</button>' +
+            '<button class="sidebar-item" onclick="closeSidebar(); openFeedback();">' +
+                '<span class="sidebar-icon">&#9993;</span>' +
+                '<span class="sidebar-label">Send Feedback</span>' +
+            '</button>' +
+        '</div>';
+
+    document.body.appendChild(sidebar);
+
+    sidebarOverlay.addEventListener('click', function() {
+        closeSidebar();
+    });
+}
+
+function updateSidebarTheme() {
+    var isDark = document.body.classList.contains('dark-mode');
+    var icon = document.getElementById('sidebar-theme-icon');
+    var label = document.getElementById('sidebar-theme-label');
+    if (icon) icon.innerHTML = isDark ? '&#9728;&#65039;' : '&#127769;';
+    if (label) label.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+}
+
+function openSidebar() {
+    if (!sidebar) createSidebar();
+    updateSidebarTheme();
+    sidebarOverlay.classList.add('active');
+    sidebar.classList.add('active');
+}
+
+function closeSidebar() {
+    if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+    if (sidebar) sidebar.classList.remove('active');
 }
