@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <!-- Open book base -->
+  <path d="M6 36 L24 32 L42 36 L42 12 L24 8 L6 12 Z" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Book spine -->
+  <line x1="24" y1="8" x2="24" y2="32" stroke="#ffffff" stroke-width="1.5"/>
+  <!-- Left page lines -->
+  <line x1="10" y1="16" x2="21" y2="13" stroke="rgba(255,255,255,0.5)" stroke-width="0.8"/>
+  <line x1="10" y1="20" x2="21" y2="17" stroke="rgba(255,255,255,0.5)" stroke-width="0.8"/>
+  <line x1="10" y1="24" x2="21" y2="21" stroke="rgba(255,255,255,0.5)" stroke-width="0.8"/>
+  <line x1="10" y1="28" x2="21" y2="25" stroke="rgba(255,255,255,0.5)" stroke-width="0.8"/>
+  <!-- Right page lines -->
+  <line x1="27" y1="13" x2="38" y2="16" stroke="rgba(255,255,255,0.5)" stroke-width="0.8"/>
+  <line x1="27" y1="17" x2="38" y2="20" stroke="rgba(255,255,255,0.5)" stroke-width="0.8"/>
+  <line x1="27" y1="21" x2="38" y2="24" stroke="rgba(255,255,255,0.5)" stroke-width="0.8"/>
+  <line x1="27" y1="25" x2="38" y2="28" stroke="rgba(255,255,255,0.5)" stroke-width="0.8"/>
+  <!-- Decorative star/Islamic motif above book -->
+  <polygon points="24,2 25.5,5.5 29,5.5 26.2,7.8 27.3,11.3 24,9 20.7,11.3 21.8,7.8 19,5.5 22.5,5.5" fill="#ffffff" opacity="0.9"/>
+</svg>

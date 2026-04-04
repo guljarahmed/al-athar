@@ -52,8 +52,20 @@ document.addEventListener('DOMContentLoaded', function() {
         scrollBtn.classList.toggle('visible', scrollTop > 400);
     });
 
-    // --- Search button in header (desktop) ---
+    // --- Logo in header ---
     var header = document.querySelector('header');
+    if (header) {
+        var logo = document.createElement('img');
+        logo.className = 'header-logo';
+        var path = window.location.pathname;
+        var prefix = (path.indexOf('finished_sections') !== -1) ? '../' : '';
+        logo.src = prefix + 'logo.svg';
+        logo.alt = 'Kitab al-Athar';
+        var h1 = header.querySelector('h1');
+        if (h1) h1.insertBefore(logo, h1.firstChild);
+    }
+
+    // --- Search button in header (desktop) ---
     if (header) {
         var searchBtn = document.createElement('button');
         searchBtn.className = 'search-trigger';
