@@ -282,7 +282,7 @@ button.header-nav-link {
 .footnotes ol {
     list-style: none !important;
     padding: 0 !important;
-    counter-reset: fn-counter;
+    /* counter-reset set by JS based on first <li value=""> */
 }
 
 .fnt, .fn {
