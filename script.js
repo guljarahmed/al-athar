@@ -304,12 +304,32 @@ function createSidebar() {
 
     var isDark = document.body.classList.contains('dark-mode');
 
+    // Build navigation links from the existing .sub-nav
+    var navHtml = '';
+    var navBtns = document.querySelectorAll('.sub-nav .nav-btn');
+    for (var i = 0; i < navBtns.length; i++) {
+        var href = navBtns[i].getAttribute('href');
+        var label = navBtns[i].textContent.replace('←', '').replace('→', '').trim();
+        var icon = '&#128279;'; // link icon default
+        if (label === 'Home') icon = '&#127968;';
+        else if (label === 'Chapters') icon = '&#128218;';
+        else if (label === 'Up') icon = '&#11014;&#65039;';
+        else if (label.indexOf('Prev') !== -1) icon = '&#9664;';
+        else if (label.indexOf('Next') !== -1) icon = '&#9654;';
+        navHtml += '<a class="sidebar-item" href="' + href + '">' +
+            '<span class="sidebar-icon">' + icon + '</span>' +
+            '<span class="sidebar-label">' + label + '</span>' +
+        '</a>';
+    }
+
     sidebar.innerHTML =
         '<div class="sidebar-header">' +
             '<h3>Menu</h3>' +
             '<button class="sidebar-close" onclick="closeSidebar()">&times;</button>' +
         '</div>' +
         '<div class="sidebar-menu">' +
+            navHtml +
+            '<div class="sidebar-divider"></div>' +
             '<button class="sidebar-item" onclick="closeSidebar(); openSearch();">' +
                 '<span class="sidebar-icon">&#128269;</span>' +
                 '<span class="sidebar-label">Search</span>' +

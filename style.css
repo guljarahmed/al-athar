@@ -734,6 +734,17 @@ ol li a:hover {
     font-weight: 400;
 }
 
+a.sidebar-item {
+    text-decoration: none;
+    color: var(--text);
+}
+
+.sidebar-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0.5rem 1.5rem;
+}
+
 /* === 21. RESPONSIVE === */
 @media (max-width: 600px) {
     .container { padding: 0 1rem; }
@@ -745,6 +756,12 @@ ol li a:hover {
     .search-trigger { display: none !important; }
     .theme-toggle { display: none !important; }
     .hamburger-btn { display: block; }
+
+    /* Hide bottom feedback button (sidebar has it) */
+    #feedback-trigger-area { display: none !important; }
+
+    /* Hide sub-nav bar (sidebar has navigation) */
+    .sub-nav { display: none !important; }
 
     .section-item a { padding: 1rem; }
     #scroll-top { bottom: 1rem; right: 1rem; width: 38px; height: 38px; }
