@@ -16,7 +16,10 @@ var THEMES = [
         saved = 'dark';
     }
     if (saved !== 'light') {
-        document.body.classList.add('theme-' + saved);
+        // Handle script loaded in <head> where document.body is null
+        if (document.body) {
+            document.body.classList.add('theme-' + saved);
+        }
     }
 })();
 
@@ -109,6 +112,13 @@ function detectCurrentBook() {
 // 3. DOM READY: All features that need the DOM
 // =============================================
 document.addEventListener('DOMContentLoaded', function() {
+
+    // --- Apply saved theme (safety net for script-in-head) ---
+    var savedTheme = localStorage.getItem('theme') || 'light';
+    if (savedTheme === 'dark') savedTheme = 'dark'; // migrate old value
+    if (savedTheme !== 'light' && !document.body.classList.contains('theme-' + savedTheme)) {
+        document.body.classList.add('theme-' + savedTheme);
+    }
 
     // --- Reading progress bar ---
     var progressBar = document.createElement('div');
