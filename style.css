@@ -362,7 +362,9 @@ button.header-nav-link {
 }
 
 /* === 8. NAVIGATION === */
-.sub-nav {
+/* Hide old HTML elements — JS rebuilds the header */
+.sub-nav,
+.theme-toggle {
     display: none;
 }
 
